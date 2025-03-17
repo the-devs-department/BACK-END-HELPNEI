@@ -1,0 +1,23 @@
+{
+  "name": "back-end-helpnei",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/js/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the-devs-department/BACK-END-HELPNEI.git"
+  },
+  "author": "The Devs Departament",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/the-devs-department/BACK-END-HELPNEI/issues"
+  },
+  "homepage": "https://github.com/the-devs-department/BACK-END-HELPNEI#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
