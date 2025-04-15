@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { AppDataSource } from './config/data-source';
 import { runSeeders } from './seed/seederAll';
 import { resetDatabase } from './config/resetDatabase';
+import routes from './routes';
 
 const app = express();
 const port = 3000;
@@ -22,6 +23,8 @@ const start = async () => {
     app.get('/', (_req: Request, res: Response) => {
       res.send('Aqui será a página do projeto');
     });
+
+    app.use('/api', routes); // Endpoint da API REST
 
     // Inicia o servidor após tudo estar pronto
     app.listen(port, () => {
