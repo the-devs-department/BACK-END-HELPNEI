@@ -4,6 +4,9 @@ import { config } from 'dotenv';
 
 config();
 
+//variavel para verificar se é script dev ou start
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 export const AppDataSource = new DataSource({
   type: 'mysql',
   host: process.env.DB_HOST || '127.0.0.1',
@@ -12,5 +15,9 @@ export const AppDataSource = new DataSource({
   password: process.env.DB_PASSWORD || '',
   database: process.env.DB_DATABASE || 'HelpneiDB',
   synchronize: true, // Cria as tabelas automaticamente
-  entities: [__dirname + '/../entities/*.ts'],
+  entities: [
+    isDevelopment 
+      ? __dirname + '/../entities/*.ts'
+      : __dirname + '/../entities/*.js'
+  ],
 });
