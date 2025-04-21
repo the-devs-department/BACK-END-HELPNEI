@@ -1,9 +1,13 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import 'reflect-metadata';
 import { AppDataSource } from './config/data-source';
 import { runSeeders } from './seed/seederAll';
 import { resetDatabase } from './config/resetDatabase';
 import routes from './routes';
+
+interface CustomError extends Error {
+  status?: number;
+}
 
 const app = express();
 const port = 3000;
@@ -25,6 +29,19 @@ const start = async () => {
     });
 
     app.use('/api', routes); // Endpoint da API REST
+
+    // Middleware para rota não encontrada (404) - **após** as rotas
+    app.use((req: Request, res: Response, next: NextFunction) => {
+      res.status(404).json({ error: 'Rota não encontrada' });
+    });
+
+    // Middleware global de tratamento de erros (500) - **após** o 404
+    app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
+      const statusCode = err.status || 500;
+      const message = err.message || 'Erro interno do servidor';
+      console.error('Erro:', err.stack);
+      res.status(statusCode).json({ error: true, message });
+    });
 
     // Inicia o servidor após tudo estar pronto
     app.listen(port, () => {
