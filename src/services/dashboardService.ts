@@ -30,9 +30,27 @@ export const DashboardData = async (companyId: string) => {
     const cities = await userLocationRepo
         .createQueryBuilder('userLocation')
         .innerJoin('userLocation.location', 'location')
-        .select('DISTINCT location.cidade', 'city')
+        .select([
+            'DISTINCT location.cidade as city',
+            'location.estado as state'
+        ])
         .where('userLocation.userId IN (SELECT userId FROM user WHERE sponsorId = :companyId)', { companyId })
         .getRawMany();
+
+    // Agrupa cidades por estado
+    const citiesByState = cities.reduce((acc, current) => {
+        const state = current.state;
+        if (!acc[state]) {
+            acc[state] = {
+                state: state,
+                cities: [],
+                totalCities: 0
+            };
+        }
+        acc[state].cities.push(current.city);
+        acc[state].totalCities++;
+        return acc;
+    }, {});
 
     return {
         citiesCount: cities.length,
@@ -40,6 +58,6 @@ export const DashboardData = async (companyId: string) => {
         totalAffiliates,
         mediumGrowth: 0,
         createdStores,
-        citiesServed: cities.map((city) => city.city),
+        citiesByState: Object.values(citiesByState),
     };
 };
