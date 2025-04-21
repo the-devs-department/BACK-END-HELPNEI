@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as controllers from '../controllers';
+import { DashboardData } from '../services/dashboardService';
 
 const router = Router();
 
@@ -41,4 +42,14 @@ Object.entries(entities).forEach(([path, controller]) => {
     router.delete(`/${path}/:${paramName}`, controller.delete.bind(controller));
 });
 
+//Pegas as informações do dashboard
+router.get('/dashboard/:companyId', async (req, res) => {
+    try {
+        const { companyId } = req.params;
+        const dashboardData = await DashboardData(companyId);
+        res.json(dashboardData);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao obter dados do dashboard', error });
+    }
+});
 export default router;

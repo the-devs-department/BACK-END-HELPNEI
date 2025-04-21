@@ -4,6 +4,8 @@ import { AppDataSource } from './config/data-source';
 import { runSeeders } from './seed/seederAll';
 import { resetDatabase } from './config/resetDatabase';
 import routes from './routes';
+import './services/dashboardService';
+import { DashboardData } from './services/dashboardService';
 
 interface CustomError extends Error {
   status?: number;
@@ -26,6 +28,17 @@ const start = async () => {
     // Rotas
     app.get('/', (_req: Request, res: Response) => {
       res.send('Aqui será a página do projeto');
+    });
+
+    // Nova rota para o dashboard
+    app.get('/dashboard/:companyId', async (req: Request, res: Response) => {
+      try {
+        const companyId = req.params.companyId;
+        const dashboardData = await DashboardData(companyId);
+        res.json(dashboardData);
+      } catch (error) {
+        res.status(500).json({ error: 'Erro ao carregar dados do dashboard' });
+      }
     });
 
     app.use('/api', routes); // Endpoint da API REST
