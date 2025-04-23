@@ -6,14 +6,16 @@ import { resetDatabase } from './config/resetDatabase';
 import routes from './routes';
 import './services/dashboardService';
 import { DashboardData } from './services/dashboardService';
+import cors from 'cors';
 
 interface CustomError extends Error {
   status?: number;
 }
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
 const start = async () => {
