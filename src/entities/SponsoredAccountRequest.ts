@@ -29,6 +29,9 @@ import {
   
     @CreateDateColumn()
     createdAt: Date;
+
+    @CreateDateColumn()
+    approvedAt: Date;
   
     constructor(user: User, sponsor: Sponsor, approved?: boolean) {
       this.user = user;
