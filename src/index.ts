@@ -27,12 +27,17 @@ const start = async () => {
     await runSeeders(); // Executa os seeders
     console.log('✅ Seeders executados com sucesso.');
 
-    // Rotas
+    // Rota de status do servidor
+    app.get('/ping', (_req: Request, res: Response) => {
+      res.send('pong');
+    });
+
+    // Rota inicial
     app.get('/', (_req: Request, res: Response) => {
       res.send('Aqui será a página do projeto');
     });
 
-    // Nova rota para o dashboard
+    // Rota do dashboard
     app.get('/dashboard/:companyId', async (req: Request, res: Response) => {
       try {
         const companyId = req.params.companyId;
@@ -45,12 +50,12 @@ const start = async () => {
 
     app.use('/api', routes); // Endpoint da API REST
 
-    // Middleware para rota não encontrada (404) - **após** as rotas
+    // Middleware para rota não encontrada
     app.use((req: Request, res: Response, next: NextFunction) => {
       res.status(404).json({ error: 'Rota não encontrada' });
     });
 
-    // Middleware global de tratamento de erros (500) - **após** o 404
+    // Middleware de erro interno
     app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
       const statusCode = err.status || 500;
       const message = err.message || 'Erro interno do servidor';
@@ -58,7 +63,7 @@ const start = async () => {
       res.status(statusCode).json({ error: true, message });
     });
 
-    // Inicia o servidor após tudo estar pronto
+    // Inicia o servidor
     app.listen(port, () => {
       console.log(`🚀 Projeto rodando em: http://localhost:${port}`);
     });
