@@ -56,7 +56,7 @@ export const DashboardData = async (companyId: string) => {
         citiesCount: cities.length,
         impactedUsers,
         totalAffiliates,
-        mediumGrowth: 0,
+        mediumGrowth: 35,
         createdStores,
         citiesByState: Object.values(citiesByState),
     };
