@@ -1,12 +1,21 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import 'reflect-metadata';
 import { AppDataSource } from './config/data-source';
 import { runSeeders } from './seed/seederAll';
 import { resetDatabase } from './config/resetDatabase';
+import routes from './routes';
+import './services/dashboardService';
+import { DashboardData } from './services/dashboardService';
+import cors from 'cors';
+
+interface CustomError extends Error {
+  status?: number;
+}
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
 const start = async () => {
@@ -18,12 +27,43 @@ const start = async () => {
     await runSeeders(); // Executa os seeders
     console.log('✅ Seeders executados com sucesso.');
 
-    // Rotas
+    // Rota de status do servidor
+    app.get('/ping', (_req: Request, res: Response) => {
+      res.send('pong');
+    });
+
+    // Rota inicial
     app.get('/', (_req: Request, res: Response) => {
       res.send('Aqui será a página do projeto');
     });
 
-    // Inicia o servidor após tudo estar pronto
+    // Rota do dashboard
+    app.get('/dashboard/:companyId', async (req: Request, res: Response) => {
+      try {
+        const companyId = req.params.companyId;
+        const dashboardData = await DashboardData(companyId);
+        res.json(dashboardData);
+      } catch (error) {
+        res.status(500).json({ error: 'Erro ao carregar dados do dashboard' });
+      }
+    });
+
+    app.use('/api', routes); // Endpoint da API REST
+
+    // Middleware para rota não encontrada
+    app.use((req: Request, res: Response, next: NextFunction) => {
+      res.status(404).json({ error: 'Rota não encontrada' });
+    });
+
+    // Middleware de erro interno
+    app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => {
+      const statusCode = err.status || 500;
+      const message = err.message || 'Erro interno do servidor';
+      console.error('Erro:', err.stack);
+      res.status(statusCode).json({ error: true, message });
+    });
+
+    // Inicia o servidor
     app.listen(port, () => {
       console.log(`🚀 Projeto rodando em: http://localhost:${port}`);
     });
