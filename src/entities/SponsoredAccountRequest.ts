@@ -37,5 +37,7 @@ import {
       this.user = user;
       this.sponsor = sponsor;
       this.approved = approved ?? Math.random() < 0.5;
+      this.createdAt = new Date();
+      this.approvedAt = new Date();
     }
   }  

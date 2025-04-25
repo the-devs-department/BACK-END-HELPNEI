@@ -8,6 +8,7 @@ import { CreatedStore } from '../entities/CreatedStore';
 import { UserAppUsage } from '../entities/UserAppUsage';
 import { Transaction } from '../entities/Transaction';
 import { SponsoredAccountRequest } from '../entities/SponsoredAccountRequest';
+import cliProgress from 'cli-progress';
 
 export const runSeeders = async () => {
   console.log('🔁 Iniciando seeders...');
@@ -25,18 +26,26 @@ export const runSeeders = async () => {
     const requestRepo = AppDataSource.getRepository(SponsoredAccountRequest);
 
     // Create Sponsors
+    console.log('🔨 Criando Sponsors...');
+    const sponsorBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    sponsorBar.start(40, 0);
     const sponsors: Sponsor[] = [];
-    for (let i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 40; i++) {
       const sponsor = sponsorRepo.create({
         nameSponsor: `Sponsor ${i}`,
         descriptionSponsor: `Descrição do patrocinador ${i}`,
       });
       sponsors.push(await sponsorRepo.save(sponsor));
+      sponsorBar.update(i);
     }
+    sponsorBar.stop();
 
     // Create Locations
+    console.log('🔨 Criando Locations...');
+    const locationBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    locationBar.start(50000, 0);
     const locations: Location[] = [];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 50000; i++) {
       const location = locationRepo.create({
         bairro: `Bairro ${i}`,
         cidade: `Cidade ${i}`,
@@ -47,11 +56,16 @@ export const runSeeders = async () => {
         longitude: -46.633308 + i * 0.001,
       });
       locations.push(await locationRepo.save(location));
+      locationBar.update(i);
     }
+    locationBar.stop();
 
     // Create Users
+    console.log('🔨 Criando Users...');
+    const userBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    userBar.start(50000, 0);
     const users: User[] = [];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 50000; i++) {
       const user = userRepo.create({
         nome: `Usuário ${i}`,
         nomeExibicao: `Usu ${i}`,
@@ -60,54 +74,79 @@ export const runSeeders = async () => {
         location: locations[i % locations.length],
       });
       users.push(await userRepo.save(user));
+      userBar.update(i);
     }
+    userBar.stop();
 
-    // Create User Locations (2)
-    for (let i = 0; i < 2; i++) {
+    // Create User Locations
+    console.log('🔨 Criando User Locations...');
+    const userLocationBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    userLocationBar.start(50000, 0);
+    for (let i = 0; i < 50000; i++) {
       const userLocation = userLocationRepo.create({
         user: users[i],
         location: locations[i],
       });
       await userLocationRepo.save(userLocation);
+      userLocationBar.update(i + 1);
     }
+    userLocationBar.stop();
 
-    // Create Stores (3)
+    // Create Stores
+    console.log('🔨 Criando Stores...');
+    const storeBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    storeBar.start(50000, 0);
     const stores: CreatedStore[] = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 50000; i++) {
       const store = storeRepo.create({
         storeOwner: users[i],
         isActive: true,
         storeCategory: `Categoria ${i}`,
       });
       stores.push(await storeRepo.save(store));
+      storeBar.update(i + 1);
     }
+    storeBar.stop();
 
-    // Create App Usage (5)
-    for (let i = 0; i < 5; i++) {
+    // Create App Usage
+    console.log('🔨 Criando App Usage...');
+    const usageBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    usageBar.start(50000, 0);
+    for (let i = 0; i < 50000; i++) {
       const usage = usageRepo.create({
         user: users[i],
         appUsageTime: 100 + i * 10,
       });
       await usageRepo.save(usage);
+      usageBar.update(i + 1);
     }
+    usageBar.stop();
 
-    // Create Transactions (20)
-    for (let i = 0; i < 20; i++) {
+    // Create Transactions
+    console.log('🔨 Criando Transactions...');
+    const transactionBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    transactionBar.start(200000, 0);
+    for (let i = 0; i < 200000; i++) {
       const transaction = transactionRepo.create({
-        user: users[i % users.length],
+        user: users[Math.floor(Math.random() * users.length)],
         store: stores[Math.floor(Math.random() * stores.length)],
-        amount: 50 + i * 2.5,
+        amount: Math.random() * 1000,
       });
       await transactionRepo.save(transaction);
+      transactionBar.update(i + 1);
     }
+    transactionBar.stop();
 
-    for (let i = 0; i < 10; i++) {
-      const user = users[i % users.length];
-      const sponsor = sponsors[i % sponsors.length];
-    
-      // Check if request for this user already exists
+    // Create Sponsored Account Requests
+    console.log('🔨 Criando Sponsored Account Requests...');
+    const requestBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+    requestBar.start(users.length, 0);
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
+      const sponsor = sponsors[Math.floor(Math.random() * sponsors.length)];
+
       const existing = await requestRepo.findOneBy({ user: { userId: user.userId } });
-    
+
       if (!existing) {
         const request = requestRepo.create({
           user,
@@ -115,8 +154,9 @@ export const runSeeders = async () => {
         });
         await requestRepo.save(request);
       }
+      requestBar.update(i + 1);
     }
-    
+    requestBar.stop();
 
     console.log('✅ Dados iniciais inseridos com sucesso!');
   } else {
