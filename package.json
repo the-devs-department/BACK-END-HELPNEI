@@ -20,6 +20,7 @@
   "homepage": "https://github.com/the-devs-department/BACK-END-HELPNEI#readme",
   "description": "",
   "dependencies": {
+    "cli-progress": "^3.12.0",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mysql2": "^3.14.0",

@@ -29,10 +29,15 @@ import {
   
     @CreateDateColumn()
     createdAt: Date;
+
+    @CreateDateColumn()
+    approvedAt: Date;
   
     constructor(user: User, sponsor: Sponsor, approved?: boolean) {
       this.user = user;
       this.sponsor = sponsor;
       this.approved = approved ?? Math.random() < 0.5;
+      this.createdAt = new Date();
+      this.approvedAt = new Date();
     }
   }  

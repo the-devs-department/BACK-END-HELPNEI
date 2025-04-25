@@ -25,4 +25,3 @@ import {
       Object.assign(this, init);
     }
   }
-  
