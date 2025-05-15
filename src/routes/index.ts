@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import * as controllers from '../controllers';
 import { DashboardData } from '../services/dashboardService';
+import authRoutes from "./authRoutes";
+import { authenticate } from '../middlewares/authMiddleware';
 
 const router = Router();
 

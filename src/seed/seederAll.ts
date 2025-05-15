@@ -143,6 +143,8 @@ export const runSeeders = async () => {
         dataNascimento: new Date(1990 + i, 1, 1).getTime(),
         sponsor: sponsors[i % sponsors.length],
         location: locations[i % locations.length],
+        email: `usuario${i}@example.com`,
+        password: `senha${i}`,
       });
       users.push(await userRepo.save(user));
       userBar.update(i);

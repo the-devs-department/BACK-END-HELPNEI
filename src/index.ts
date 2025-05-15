@@ -7,6 +7,7 @@ import routes from './routes';
 import './services/dashboardService';
 import { DashboardData } from './services/dashboardService';
 import cors from 'cors';
+import authRoutes from './routes/authRoutes';
 
 interface CustomError extends Error {
   status?: number;
@@ -20,11 +21,11 @@ app.use(express.json());
 
 const start = async () => {
   try {
-    await resetDatabase(); // 🔥 Dropa e recria o banco
+    // await resetDatabase(); // 🔥 Dropa e recria o banco
     await AppDataSource.initialize(); // Conecta ao banco
     console.log('✅ Conexão com o banco de dados estabelecida.');
 
-    await runSeeders(); // Executa os seeders
+    // await runSeeders(); // Executa os seeders
     console.log('✅ Seeders executados com sucesso.');
 
     // Rota de status do servidor
@@ -49,6 +50,7 @@ const start = async () => {
     });
 
     app.use('/api', routes); // Endpoint da API REST
+    app.use("/api/auth", authRoutes);
 
     // Middleware para rota não encontrada
     app.use((req: Request, res: Response, next: NextFunction) => {
