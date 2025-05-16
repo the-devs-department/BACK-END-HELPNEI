@@ -20,15 +20,18 @@
   "homepage": "https://github.com/the-devs-department/BACK-END-HELPNEI#readme",
   "description": "",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "cli-progress": "^3.12.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.14.0",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.22",
-    "cors": "^2.8.5"
+    "typeorm": "^0.3.22"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.14.0",
@@ -38,7 +41,6 @@
     "supertest": "^7.1.0",
     "ts-jest": "^29.3.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3",
-    "@types/cors": "^2.8.17"
+    "typescript": "^5.8.3"
   }
 }

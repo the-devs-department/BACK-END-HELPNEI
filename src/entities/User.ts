@@ -12,6 +12,12 @@ import {
   export class User {
     @PrimaryGeneratedColumn('uuid')
     userId: string;
+
+    @Column({ unique: true })
+    email: string;
+    
+    @Column()
+    password: string;
   
     @Column() nome: string;
     @Column({ nullable: true }) nomeExibicao: string;

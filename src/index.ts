@@ -7,6 +7,7 @@ import routes from './routes';
 import './services/dashboardService';
 import { DashboardData } from './services/dashboardService';
 import cors from 'cors';
+import authRoutes from './routes/authRoutes';
 
 interface CustomError extends Error {
   status?: number;
@@ -49,6 +50,7 @@ const start = async () => {
     });
 
     app.use('/api', routes); // Endpoint da API REST
+    app.use("/api/auth", authRoutes);
 
     // Middleware para rota não encontrada
     app.use((req: Request, res: Response, next: NextFunction) => {
