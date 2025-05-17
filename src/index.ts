@@ -8,6 +8,7 @@ import './services/dashboardService';
 import { DashboardData } from './services/dashboardService';
 import cors from 'cors';
 import authRoutes from './routes/authRoutes';
+import { getAllCompanies } from './services/companiesService';
 
 interface CustomError extends Error {
   status?: number;
@@ -37,6 +38,16 @@ const start = async () => {
     app.get('/', (_req: Request, res: Response) => {
       res.send('Aqui será a página do projeto');
     });
+
+    //Rota para carregar informações das empresas
+    app.get('/companies', async (req: Request, res: Response) => {
+      try {
+        const companies = await getAllCompanies();
+        res.json(companies);
+      } catch (error) {
+        res.status(500).json({ error: 'Erro ao carregar empresas' });
+      }
+    })
 
     // Rota do dashboard
     app.get('/dashboard/:companyId', async (req: Request, res: Response) => {
