@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import { AppDataSource } from './config/data-source';
 import { runSeeders } from './seed/seederAll';
 import { resetDatabase } from './config/resetDatabase';
-import routes from './routes';
+import routes from './routes/mainRoutes';
 import './services/dashboardService';
 import { DashboardData } from './services/dashboardService';
 import cors from 'cors';
