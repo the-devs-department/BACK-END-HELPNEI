@@ -3,10 +3,12 @@ import 'reflect-metadata';
 import { AppDataSource } from './config/data-source';
 import { runSeeders } from './seed/seederAll';
 import { resetDatabase } from './config/resetDatabase';
-import routes from './routes';
+import routes from './routes/mainRoutes';
 import './services/dashboardService';
 import { DashboardData } from './services/dashboardService';
 import cors from 'cors';
+import authRoutes from './routes/authRoutes';
+import { getAllCompanies } from './services/companiesService';
 
 interface CustomError extends Error {
   status?: number;
@@ -37,6 +39,16 @@ const start = async () => {
       res.send('Aqui será a página do projeto');
     });
 
+    //Rota para carregar informações das empresas
+    app.get('/companies', async (req: Request, res: Response) => {
+      try {
+        const companies = await getAllCompanies();
+        res.json(companies);
+      } catch (error) {
+        res.status(500).json({ error: 'Erro ao carregar empresas' });
+      }
+    })
+
     // Rota do dashboard
     app.get('/dashboard/:companyId', async (req: Request, res: Response) => {
       try {
@@ -49,6 +61,7 @@ const start = async () => {
     });
 
     app.use('/api', routes); // Endpoint da API REST
+    app.use("/api/auth", authRoutes);
 
     // Middleware para rota não encontrada
     app.use((req: Request, res: Response, next: NextFunction) => {
