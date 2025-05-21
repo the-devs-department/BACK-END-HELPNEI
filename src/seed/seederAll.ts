@@ -143,6 +143,9 @@ export const runSeeders = async () => {
         sponsorId: empresa.id,
         nameSponsor: empresa.name,
         descriptionSponsor: empresa.description,
+        site_web: empresa.webSite,
+        instagram: empresa.instagram,
+        linkedin: empresa.linkedin,
         lowSponsorLogo: empresa.logo,
         highSponsorLogo: empresa.Highlogo,
       });
