@@ -171,7 +171,8 @@ export const runSeeders = async () => {
       "CE": 184, 
       "PA": 144, 
       "MA": 217, 
-      "GO": 246, 
+      "GO": 246,
+      "DF": 1, 
       "SC": 295, 
       "PB": 223,
       "ES": 78,  
@@ -212,10 +213,10 @@ export const runSeeders = async () => {
     // Create Locations
     console.log('🔨 Criando Locations...');
     const locationBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    locationBar.start(50000, 0);
+    locationBar.start(100, 0);
     const locations: Location[] = [];
 
-    for (let i = 1; i <= 50000; i++) {
+    for (let i = 1; i <= 100; i++) {
       const randomEstado = estadosBrasil[Math.floor(Math.random() * estadosBrasil.length)];
       
       const location = locationRepo.create({
@@ -238,9 +239,9 @@ export const runSeeders = async () => {
     // Create Users
     console.log('🔨 Criando Users...');
     const userBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    userBar.start(50000, 0);
+    userBar.start(100, 0);
     const users: User[] = [];
-    for (let i = 1; i <= 50000; i++) {
+    for (let i = 1; i <= 100; i++) {
       const user = userRepo.create({
         nome: `Usuário ${i}`,
         nomeExibicao: `Usu ${i}`,
@@ -258,8 +259,8 @@ export const runSeeders = async () => {
     // Create User Locations
     console.log('🔨 Criando User Locations...');
     const userLocationBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    userLocationBar.start(50000, 0);
-    for (let i = 0; i < 50000; i++) {
+    userLocationBar.start(100, 0);
+    for (let i = 0; i < 100; i++) {
       const userLocation = userLocationRepo.create({
         user: users[i],
         location: locations[i],
@@ -272,9 +273,9 @@ export const runSeeders = async () => {
     // Create Stores
     console.log('🔨 Criando Stores...');
     const storeBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    storeBar.start(50000, 0);
+    storeBar.start(100, 0);
     const stores: CreatedStore[] = [];
-    for (let i = 0; i < 50000; i++) {
+    for (let i = 0; i < 100; i++) {
       const store = storeRepo.create({
         storeOwner: users[i],
         isActive: true,
@@ -288,8 +289,8 @@ export const runSeeders = async () => {
     // Create App Usage
     console.log('🔨 Criando App Usage...');
     const usageBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    usageBar.start(50000, 0);
-    for (let i = 0; i < 50000; i++) {
+    usageBar.start(100, 0);
+    for (let i = 0; i < 100; i++) {
       const usage = usageRepo.create({
         user: users[i],
         appUsageTime: 100 + i * 10,
@@ -302,8 +303,8 @@ export const runSeeders = async () => {
     // Create Transactions
     console.log('🔨 Criando Transactions...');
     const transactionBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    transactionBar.start(200000, 0);
-    for (let i = 0; i < 200000; i++) {
+    transactionBar.start(100, 0);
+    for (let i = 0; i < 100; i++) {
       const transaction = transactionRepo.create({
         user: users[Math.floor(Math.random() * users.length)],
         store: stores[Math.floor(Math.random() * stores.length)],

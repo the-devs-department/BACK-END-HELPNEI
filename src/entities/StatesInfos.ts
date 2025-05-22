@@ -29,6 +29,8 @@ export class StatesInfos{
   @Column({type: 'int', nullable: false})
   GO: number;
   @Column({type: 'int', nullable: false})
+  DF: number;
+  @Column({type: 'int', nullable: false})
   SC: number;
   @Column({type: 'int', nullable: false})
   PB: number;
