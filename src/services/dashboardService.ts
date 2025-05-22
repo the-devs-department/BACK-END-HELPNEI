@@ -1,13 +1,20 @@
 import { AppDataSource } from '../config/data-source';
 import { User } from '../entities/User';
 import { CreatedStore } from '../entities/CreatedStore';
-import { UserLocation } from '../entities/UserLocation';
+import { StatesInfos } from '../entities/StatesInfos';
+import { Sponsor } from '../entities/Sponsor';
+
 
 export const DashboardData = async (companyId: string) => {
+    const sponsorRepo = AppDataSource.getRepository(Sponsor)
     const userRepo = AppDataSource.getRepository(User);
     const storeRepo = AppDataSource.getRepository(CreatedStore);
-    const userLocationRepo = AppDataSource.getRepository(UserLocation);
+    const citiesRepo = AppDataSource.getRepository(StatesInfos);
 
+    const sponsorInfos = await sponsorRepo
+        .createQueryBuilder('sponsor')
+        .where('sponsor.sponsorId = :companyId', {companyId})
+        .getOne();
     // Total de usuários associados à empresa mãe
     const impactedUsers = await userRepo
         .createQueryBuilder('user')
@@ -27,37 +34,28 @@ export const DashboardData = async (companyId: string) => {
         .getCount();
 
     // Cidades atendidas pela empresa mãe
-    const cities = await userLocationRepo
-        .createQueryBuilder('userLocation')
-        .innerJoin('userLocation.location', 'location')
-        .select([
-            'DISTINCT location.cidade as city',
-            'location.estado as state'
-        ])
-        .where('userLocation.userId IN (SELECT userId FROM user WHERE sponsorId = :companyId)', { companyId })
-        .getRawMany();
-
-    // Agrupa cidades por estado
-    const citiesByState = cities.reduce((acc, current) => {
-        const state = current.state;
-        if (!acc[state]) {
-            acc[state] = {
-                state: state,
-                cities: [],
-                totalCities: 0
-            };
+    const Estados: string[] = [
+    'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'ES', 'GO', 'DF', 'MA', 'MT', 'MS',
+    'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC',
+    'SP', 'SE', 'TO'
+];
+    let totalCities = 0
+    const cities = await citiesRepo
+    .createQueryBuilder('StatesInfos')
+    .where('StatesInfos.sponsorId = :companyId', { companyId }).getOne();
+    if (cities) {
+        for (let estado of Estados){
+            totalCities += cities[estado]
         }
-        acc[state].cities.push(current.city);
-        acc[state].totalCities++;
-        return acc;
-    }, {});
+    } 
 
     return {
-        citiesCount: cities.length,
+        sponsorInfos,
         impactedUsers,
         totalAffiliates,
         mediumGrowth: 35,
         createdStores,
-        citiesByState: Object.values(citiesByState),
+        totalCities,
+        cities
     };
 };
