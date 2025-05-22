@@ -3,6 +3,7 @@ import { User } from '../entities/User';
 import { CreatedStore } from '../entities/CreatedStore';
 import { StatesInfos } from '../entities/StatesInfos';
 import { Sponsor } from '../entities/Sponsor';
+import CalcMedGrowth from './MediumGrowthCalc';
 
 
 export const DashboardData = async (companyId: string) => {
@@ -20,6 +21,8 @@ export const DashboardData = async (companyId: string) => {
         .createQueryBuilder('user')
         .where('user.sponsorId = :companyId', { companyId })
         .getCount();
+    
+    const mediumGrowth = CalcMedGrowth(impactedUsers)
 
     // Total de afiliados (usuários que foram indicados)
     const totalAffiliates = await userRepo
@@ -53,7 +56,7 @@ export const DashboardData = async (companyId: string) => {
         sponsorInfos,
         impactedUsers,
         totalAffiliates,
-        mediumGrowth: 35,
+        mediumGrowth,
         createdStores,
         totalCities,
         cities
