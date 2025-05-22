@@ -42,8 +42,9 @@ export const runSeeders = async () => {
         webSite: "https://www.amazon.com.br/",
         instagram: "https://www.instagram.com/amazonbrasil/",
         linkedin: "https://www.linkedin.com/company/amazon/",
-        logo: "https://media.licdn.com/dms/image/v2/C560BAQHTvZwCx4p2Qg/company-logo_200_200/company-logo_200_200/0/1630640869849/amazon_logo?e=1753315200&v=beta&t=HTpP3CoCINZBc-rRWVA-_YwaSElK9385gSyyZOTBb1M", 
-        Highlogo: "https://assets.aboutamazon.com/dims4/default/c7f0d8d/2147483647/strip/true/crop/6110x2047+0+0/resize/645x216!/format/webp/quality/90/?url=https%3A%2F%2Famazon-blogs-brightspot.s3.amazonaws.com%2F2e%2Fd7%2Fac71f1f344c39f8949f48fc89e71%2Famazon-logo-squid-ink-smile-orange.png"
+        logo: "https://media.licdn.com/dms/image/v2/C560BAQHTvZwCx4p2Qg/company-logo_200_200/company-logo_200_200/0/1630640869849/amazon_logo?e=1753315200&v=beta&t=HTpP3CoCINZBc-rRWVA-_YwaSElK9385gSyyZOTBb1M",
+        Highlogo: "https://assets.aboutamazon.com/dims4/default/c7f0d8d/2147483647/strip/true/crop/6110x2047+0+0/resize/645x216!/format/webp/quality/90/?url=https%3A%2F%2Famazon-blogs-brightspot.s3.amazonaws.com%2F2e%2Fd7%2Fac71f1f344c39f8949f48fc89e71%2Famazon-logo-squid-ink-smile-orange.png",
+        rendaMinima:"ate3"
       },
       {
         id: 2,
@@ -52,8 +53,9 @@ export const runSeeders = async () => {
         webSite: "https://www.netshoes.com.br/",
         instagram: "https://www.instagram.com/netshoes/",
         linkedin: "https://www.linkedin.com/company/gruponetshoes/",
-        logo: "https://play-lh.googleusercontent.com/ADZLLcW0oIJ98VVHcxIGgmJ-Ex4m0SUUq9-XhGE5wsKJTRA2VxLdkg2kNGVQalbrm8E", 
-        Highlogo: "https://logodownload.org/wp-content/uploads/2020/02/netshoes-logo-5.png"
+        logo: "https://play-lh.googleusercontent.com/ADZLLcW0oIJ98VVHcxIGgmJ-Ex4m0SUUq9-XhGE5wsKJTRA2VxLdkg2kNGVQalbrm8E",
+        Highlogo: "https://logodownload.org/wp-content/uploads/2020/02/netshoes-logo-5.png",
+        rendaMinima:"ate1",
       },
       {
         id: 3,
@@ -62,8 +64,9 @@ export const runSeeders = async () => {
         webSite: "https://www.magazineluiza.com.br/",
         instagram: "https://www.instagram.com/magazineluiza/",
         linkedin: "https://www.linkedin.com/company/magazine-luiza/",
-        logo: "https://assets.hgbrasil.com/finance/companies/big/magaz-luiza.png", 
-        Highlogo: "https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo-8.png"
+        logo: "https://assets.hgbrasil.com/finance/companies/big/magaz-luiza.png",
+        Highlogo: "https://logodownload.org/wp-content/uploads/2014/06/magazine-luiza-logo-8.png",
+        rendaMinima:"ate1",
       },
       {
         id: 4,
@@ -72,8 +75,9 @@ export const runSeeders = async () => {
         webSite: "https://www.natura.com.br/",
         instagram: "https://www.instagram.com/naturabroficial/",
         linkedin: "https://www.linkedin.com/company/natura/",
-        logo: "https://media.licdn.com/dms/image/v2/D4D0BAQHLbk5HtPaFrA/company-logo_200_200/company-logo_200_200/0/1722945249128/natura_logo?e=1753315200&v=beta&t=1Yq0zKXuQlflM4N2mzCBSwSpsmLXDU6Clu9x-vVd7t8", 
-        Highlogo: "https://logopng.com.br/logos/natura-108.png"
+        logo: "https://media.licdn.com/dms/image/v2/D4D0BAQHLbk5HtPaFrA/company-logo_200_200/company-logo_200_200/0/1722945249128/natura_logo?e=1753315200&v=beta&t=1Yq0zKXuQlflM4N2mzCBSwSpsmLXDU6Clu9x-vVd7t8",
+        Highlogo: "https://logopng.com.br/logos/natura-108.png",
+        rendaMinima:"ate3",
       },
       {
         id: 5,
@@ -82,8 +86,9 @@ export const runSeeders = async () => {
         webSite: "https://www.tupperware.com.br/",
         instagram: "https://www.instagram.com/tupperwarebrasil/",
         linkedin: "http://linkedin.com/company/tupperware-brands",
-        logo: "https://media.licdn.com/dms/image/v2/D4E0BAQEMfx64Rqz7Xw/company-logo_200_200/B4EZasCPJPGYAI-/0/1746642990009/tupperware_brand_logo?e=1753315200&v=beta&t=EYjlAsxIyRYk_BksXb78NHcB-Ub25oSFplOmgfB8Dc8", 
-        Highlogo: "https://1000marcas.net/wp-content/uploads/2020/11/Tupperware-Logo-1994.png"
+        logo: "https://media.licdn.com/dms/image/v2/D4E0BAQEMfx64Rqz7Xw/company-logo_200_200/B4EZasCPJPGYAI-/0/1746642990009/tupperware_brand_logo?e=1753315200&v=beta&t=EYjlAsxIyRYk_BksXb78NHcB-Ub25oSFplOmgfB8Dc8",
+        Highlogo: "https://1000marcas.net/wp-content/uploads/2020/11/Tupperware-Logo-1994.png",
+        rendaMinima:"mais3"
       },
       {
         id: 6,
@@ -92,8 +97,9 @@ export const runSeeders = async () => {
         webSite: "https://www.mercadolivre.com.br/",
         instagram: "https://www.instagram.com/mercadolivre/",
         linkedin: "https://www.linkedin.com/company/mercadolivre-com/",
-        logo: "https://play-lh.googleusercontent.com/2uEptSnLOcFWnSjxLLIfGOWrf6lWSQ8pheDbGdzhqn0dcV93PBSrUkyjAKPgY7ejmA=w480-h960-rw", 
-        Highlogo: "https://anyhub.com.br/wp-content/uploads/2022/07/mercado-livre.png"
+        logo: "https://play-lh.googleusercontent.com/2uEptSnLOcFWnSjxLLIfGOWrf6lWSQ8pheDbGdzhqn0dcV93PBSrUkyjAKPgY7ejmA=w480-h960-rw",
+        Highlogo: "https://anyhub.com.br/wp-content/uploads/2022/07/mercado-livre.png",
+        rendaMinima:"ate3"
       },
       {
         id: 7,
@@ -102,8 +108,9 @@ export const runSeeders = async () => {
         webSite: "https://www.nike.com.br/",
         instagram: "http://instagram.com/nike",
         linkedin: "https://www.linkedin.com/company/nike/",
-        logo: "https://play-lh.googleusercontent.com/gLAc2N-olmhgx-Tc_vPddFO98NBJhS2MUnIftI8QbNWCL0KcrhFpRzozR-2xwmxalCM=w480-h960-rw", 
-        Highlogo: "https://media.about.nike.com/img/cf68f541-fc92-4373-91cb-086ae0fe2f88/001-nike-logos-swoosh-black.jpg?m=eyJlZGl0cyI6eyJqcGVnIjp7InF1YWxpdHkiOjEwMH0sIndlYnAiOnsicXVhbGl0eSI6MTAwfSwiZXh0cmFjdCI6eyJsZWZ0IjowLCJ0b3AiOjAsIndpZHRoIjo1MDAwLCJoZWlnaHQiOjI4MTN9LCJyZXNpemUiOnsid2lkdGgiOjE5MjB9fX0%3D&s=4617fc4ca48a0336d90d25001a63e65147c95885bad727aa1b5473cf672dc459"
+        logo: "https://play-lh.googleusercontent.com/gLAc2N-olmhgx-Tc_vPddFO98NBJhS2MUnIftI8QbNWCL0KcrhFpRzozR-2xwmxalCM=w480-h960-rw",
+        Highlogo: "https://media.about.nike.com/img/cf68f541-fc92-4373-91cb-086ae0fe2f88/001-nike-logos-swoosh-black.jpg?m=eyJlZGl0cyI6eyJqcGVnIjp7InF1YWxpdHkiOjEwMH0sIndlYnAiOnsicXVhbGl0eSI6MTAwfSwiZXh0cmFjdCI6eyJsZWZ0IjowLCJ0b3AiOjAsIndpZHRoIjo1MDAwLCJoZWlnaHQiOjI4MTN9LCJyZXNpemUiOnsid2lkdGgiOjE5MjB9fX0%3D&s=4617fc4ca48a0336d90d25001a63e65147c95885bad727aa1b5473cf672dc459",
+        rendaMinima:"mais3"
       },
       {
         id: 8,
@@ -112,18 +119,20 @@ export const runSeeders = async () => {
         webSite: "https://www.adidas.com.br/",
         instagram: "https://www.instagram.com/adidas",
         linkedin: "https://www.linkedin.com/company/adidas/",
-        logo: "https://play-lh.googleusercontent.com/fis-9rTH8zeCfMrHl-AQxY2wHP6ilz8pcOx_BiuMTKECK2Wz11u6Oui6poEAiVz3IlhB=w480-h960-rw", 
-        Highlogo: "https://cdn.freebiesupply.com/logos/large/2x/adidas-2-logo-png-transparent.png"
+        logo: "https://play-lh.googleusercontent.com/fis-9rTH8zeCfMrHl-AQxY2wHP6ilz8pcOx_BiuMTKECK2Wz11u6Oui6poEAiVz3IlhB=w480-h960-rw",
+        Highlogo: "https://cdn.freebiesupply.com/logos/large/2x/adidas-2-logo-png-transparent.png",
+        rendaMinima:"mais3"
       },
       {
         id: 9,
         name: "Shein",
-        description: "A Shein é uma varejista global de moda online, amplamente reconhecida por sua oferta de tendências rápidas (fast fashion) e preços acessíveis, com uma vasta gama de roupas, acessórios e itens de beleza. Fundada em 2008 por Chris Xu na China, a empresa se especializou em um modelo de negócio ágil, que permite lançar novos produtos em um ritmo acelerado, atendendo às demandas de um público jovem e antenado nas redes sociais. A Shein opera globalmente, vendendo diretamente aos consumidores através de seu aplicativo e website, e expandiu seu alcance com um popular programa de afiliados, que permite a influenciadores e criadores de conteúdo promoverem seus produtos e ganharem comissões, consolidando sua presença massiva no mercado de moda digital em diversos países, incluindo o Brasil.",
+        description: "A Shein é uma varejista global de moda online, amplamente reconhecida por sua oferta de tendências rápidas (fast fashion) e preços acessíveis, com uma vasta gama de roupas, acessórios e itens de beleza. Fundada em 2008 por Chris Xu na China, a empresa se especializou em um modelo de negócio ágil, que permite lançar novos produtos em um ritmo acelerado, atendendo às demandas de um público jovem e antenado nas redes sociais. A Shein opera globalmente, vendendo diretamente aos consumidores através de seu aplicativo e website, e expandiu seu alcance com um popular programa de afiliados, que permite a influenciadores e criadores de conteúdo promoverem seus produtos e ganharem comissões, consolidando sua presença massiva no mercado de moda digital em diversos países, incluindo o Brasil.",        
         webSite: "https://br.shein.com/",
         instagram: "https://www.instagram.com/sheinbrasil",
         linkedin: "https://www.linkedin.com/company/shein/",
-        logo: "https://media.licdn.com/dms/image/v2/C560BAQHemcXlbVKuvQ/company-logo_200_200/company-logo_200_200/0/1631353279026?e=1753315200&v=beta&t=9ZSOTSK3xTh0I1Z3jlBDPyVp3_ecEw8EjTAlGEMb9x4", 
-        Highlogo: "https://portaldaeconomia.com/wp-content/uploads/2024/05/image-28-1920x1024-1.png"
+        logo: "https://media.licdn.com/dms/image/v2/C560BAQHemcXlbVKuvQ/company-logo_200_200/company-logo_200_200/0/1631353279026?e=1753315200&v=beta&t=9ZSOTSK3xTh0I1Z3jlBDPyVp3_ecEw8EjTAlGEMb9x4",
+        Highlogo: "https://portaldaeconomia.com/wp-content/uploads/2024/05/image-28-1920x1024-1.png",
+        rendaMinima:"ate3"
       },
       {
         id: 10,
@@ -132,15 +141,15 @@ export const runSeeders = async () => {
         webSite: "https://www.temu.com/br",
         instagram: "https://www.instagram.com/temu/",
         linkedin: "https://www.linkedin.com/company/temuapp/",
-        logo: "https://play-lh.googleusercontent.com/Nz5sdWyh7jn4eTy_GSaRBDgaKhLC1pvYywC6fklDOlPGbopmeFN9NkqgKGjsvJMbKVEI=w480-h960-rw", 
-        Highlogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Temu_logo.svg/1024px-Temu_logo.svg.png"
+        logo: "https://play-lh.googleusercontent.com/Nz5sdWyh7jn4eTy_GSaRBDgaKhLC1pvYywC6fklDOlPGbopmeFN9NkqgKGjsvJMbKVEI=w480-h960-rw",
+        Highlogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Temu_logo.svg/1024px-Temu_logo.svg.png",
+        rendaMinima:"ate1"
       }
     ];
 
     for (let i = 0; i < empresasReais.length; i++) {
       const empresa = empresasReais[i];
       const sponsor = sponsorRepo.create({
-        sponsorId: empresa.id,
         nameSponsor: empresa.name,
         descriptionSponsor: empresa.description,
         site_web: empresa.webSite,
@@ -148,6 +157,7 @@ export const runSeeders = async () => {
         linkedin: empresa.linkedin,
         lowSponsorLogo: empresa.logo,
         highSponsorLogo: empresa.Highlogo,
+        rendaMinima: empresa.rendaMinima as 'ate1' | 'ate3' | 'mais3', 
       });
       sponsors.push(await sponsorRepo.save(sponsor));
       sponsorBar.update(i + 1);

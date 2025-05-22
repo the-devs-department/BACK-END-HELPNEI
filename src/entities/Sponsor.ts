@@ -51,6 +51,9 @@ export class Sponsor {
   @Column({ type: 'text', nullable: true })
   lowSponsorLogo: string;
 
+  @Column({ type: 'enum', enum: ['ate1', 'ate3', 'mais3'], nullable: false })
+  rendaMinima: 'ate1' | 'ate3' | 'mais3';
+
   @OneToMany(() => SponsoredAccountRequest, (request) => request.sponsor)
   sponsoredRequests: SponsoredAccountRequest[];
 
