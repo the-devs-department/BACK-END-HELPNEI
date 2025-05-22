@@ -21,11 +21,11 @@ app.use(express.json());
 
 const start = async () => {
   try {
-    // await resetDatabase(); // 🔥 Dropa e recria o banco
+    await resetDatabase(); // 🔥 Dropa e recria o banco
     await AppDataSource.initialize(); // Conecta ao banco
     console.log('✅ Conexão com o banco de dados estabelecida.');
 
-    // await runSeeders(); // Executa os seeders
+    await runSeeders(); // Executa os seeders
     console.log('✅ Seeders executados com sucesso.');
 
     // Rota de status do servidor

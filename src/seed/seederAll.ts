@@ -10,6 +10,45 @@ import { Transaction } from '../entities/Transaction';
 import { SponsoredAccountRequest } from '../entities/SponsoredAccountRequest';
 import cliProgress from 'cli-progress';
 
+// Real Brazilian cities by state
+const brazilianCities = {
+  "SP": [
+    { name: "São Paulo", lat: -23.550520, lng: -46.633308 },
+    { name: "Campinas", lat: -22.907104, lng: -47.063240 },
+    { name: "Santos", lat: -23.960833, lng: -46.333889 },
+    { name: "São José dos Campos", lat: -23.186111, lng: -45.885278 },
+    { name: "Ribeirão Preto", lat: -21.176389, lng: -47.820833 }
+  ],
+  "RJ": [
+    { name: "Rio de Janeiro", lat: -22.906847, lng: -43.172897 },
+    { name: "Niterói", lat: -22.883333, lng: -43.103611 },
+    { name: "São Gonçalo", lat: -22.826944, lng: -43.053889 },
+    { name: "Duque de Caxias", lat: -22.785833, lng: -43.311667 },
+    { name: "Nova Iguaçu", lat: -22.755833, lng: -43.450833 }
+  ],
+  "MG": [
+    { name: "Belo Horizonte", lat: -19.916667, lng: -43.934444 },
+    { name: "Uberlândia", lat: -18.918889, lng: -48.277222 },
+    { name: "Contagem", lat: -19.931944, lng: -44.053889 },
+    { name: "Juiz de Fora", lat: -21.764167, lng: -43.349444 },
+    { name: "Betim", lat: -19.967778, lng: -44.197778 }
+  ],
+  "RS": [
+    { name: "Porto Alegre", lat: -30.033056, lng: -51.230000 },
+    { name: "Caxias do Sul", lat: -29.167778, lng: -51.178889 },
+    { name: "Pelotas", lat: -31.771944, lng: -52.342778 },
+    { name: "Canoas", lat: -29.917778, lng: -51.183889 },
+    { name: "Santa Maria", lat: -29.683889, lng: -53.806944 }
+  ],
+  "PR": [
+    { name: "Curitiba", lat: -25.428333, lng: -49.273333 },
+    { name: "Londrina", lat: -23.310278, lng: -51.159722 },
+    { name: "Maringá", lat: -23.425278, lng: -51.938889 },
+    { name: "Ponta Grossa", lat: -25.095278, lng: -50.161944 },
+    { name: "Cascavel", lat: -24.955833, lng: -53.455278 }
+  ]
+};
+
 export const runSeeders = async () => {
   console.log('🔁 Iniciando seeders...');
 
@@ -97,54 +136,54 @@ export const runSeeders = async () => {
 
     sponsorBar.stop();
 
-
-    // Lista de siglas dos estados brasileiros
-    const estadosBrasil: string[] = [
-      "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO",
-      "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI",
-      "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"
-    ];
-
-    // Create Locations
+    // Create Locations with real cities
     console.log('🔨 Criando Locations...');
     const locationBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    locationBar.start(50000, 0);
+    const totalLocations = 1000; // Reduced number for more realistic data
+    locationBar.start(totalLocations, 0);
     const locations: Location[] = [];
 
-    for (let i = 1; i <= 50000; i++) {
-      const randomEstado = estadosBrasil[Math.floor(Math.random() * estadosBrasil.length)];
+    const states = Object.keys(brazilianCities);
+    for (let i = 0; i < totalLocations; i++) {
+      const randomState = states[Math.floor(Math.random() * states.length)];
+      const citiesInState = brazilianCities[randomState];
+      const randomCity = citiesInState[Math.floor(Math.random() * citiesInState.length)];
       
       const location = locationRepo.create({
-        bairro: `Bairro ${i}`,
-        cidade: `Cidade ${i}`,
-        estado: randomEstado,
-        cep: `0100${i}-000`,
-        endereco: `Rua ${i}`,
-        latitude: -23.550520 + i * 0.001,
-        longitude: -46.633308 + i * 0.001,
+        bairro: `Bairro ${Math.floor(Math.random() * 100) + 1}`,
+        cidade: randomCity.name,
+        estado: randomState,
+        cep: `${Math.floor(Math.random() * 90000) + 10000}-${Math.floor(Math.random() * 900) + 100}`,
+        endereco: `Rua ${Math.floor(Math.random() * 1000) + 1}`,
+        latitude: randomCity.lat + (Math.random() - 0.5) * 0.1,
+        longitude: randomCity.lng + (Math.random() - 0.5) * 0.1,
       });
 
       locations.push(await locationRepo.save(location));
-      locationBar.update(i);
+      locationBar.update(i + 1);
     }
 
     locationBar.stop();
 
-
-    // Create Users
+    // Create Users with better distribution
     console.log('🔨 Criando Users...');
     const userBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    userBar.start(50000, 0);
+    const totalUsers = 5000; // Reduced number for more realistic data
+    userBar.start(totalUsers, 0);
     const users: User[] = [];
-    for (let i = 1; i <= 50000; i++) {
+
+    for (let i = 1; i <= totalUsers; i++) {
+      const randomSponsor = sponsors[Math.floor(Math.random() * sponsors.length)];
+      const randomLocation = locations[Math.floor(Math.random() * locations.length)];
+      
       const user = userRepo.create({
         nome: `Usuário ${i}`,
         nomeExibicao: `Usu ${i}`,
-        dataNascimento: new Date(1990 + i, 1, 1).getTime(),
-        sponsor: sponsors[i % sponsors.length],
-        location: locations[i % locations.length],
+        dataNascimento: new Date(1990 + Math.floor(Math.random() * 30), Math.floor(Math.random() * 12), Math.floor(Math.random() * 28) + 1).getTime(),
+        sponsor: randomSponsor,
+        location: randomLocation,
         email: `usuario${i}@example.com`,
-        password: `senha${i}`,
+        password: `senha${i}`
       });
       users.push(await userRepo.save(user));
       userBar.update(i);
@@ -154,61 +193,51 @@ export const runSeeders = async () => {
     // Create User Locations
     console.log('🔨 Criando User Locations...');
     const userLocationBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    userLocationBar.start(50000, 0);
-    for (let i = 0; i < 50000; i++) {
+    userLocationBar.start(users.length, 0);
+    for (let i = 0; i < users.length; i++) {
       const userLocation = userLocationRepo.create({
         user: users[i],
-        location: locations[i],
+        location: users[i].location, // Use the same location as the user
       });
       await userLocationRepo.save(userLocation);
       userLocationBar.update(i + 1);
     }
     userLocationBar.stop();
 
-    // Create Stores
+    // Create Stores with better distribution
     console.log('🔨 Criando Stores...');
     const storeBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    storeBar.start(50000, 0);
+    const totalStores = 2000; // Reduced number for more realistic data
+    storeBar.start(totalStores, 0);
     const stores: CreatedStore[] = [];
-    for (let i = 0; i < 50000; i++) {
+
+    const storeCategories = ['Alimentação', 'Vestuário', 'Eletrônicos', 'Serviços', 'Educação', 'Saúde', 'Beleza', 'Esportes', 'Casa', 'Automotivo'];
+    
+    for (let i = 0; i < totalStores; i++) {
+      const randomUser = users[Math.floor(Math.random() * users.length)];
       const store = storeRepo.create({
-        storeOwner: users[i],
-        isActive: true,
-        storeCategory: `Categoria ${i}`,
+        storeOwner: randomUser,
+        isActive: Math.random() > 0.1, // 90% chance of being active
+        storeCategory: storeCategories[Math.floor(Math.random() * storeCategories.length)],
       });
       stores.push(await storeRepo.save(store));
       storeBar.update(i + 1);
     }
     storeBar.stop();
 
-    // Create App Usage
+    // Create App Usage with realistic data
     console.log('🔨 Criando App Usage...');
     const usageBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    usageBar.start(50000, 0);
-    for (let i = 0; i < 50000; i++) {
+    usageBar.start(users.length, 0);
+    for (let i = 0; i < users.length; i++) {
       const usage = usageRepo.create({
         user: users[i],
-        appUsageTime: 100 + i * 10,
+        appUsageTime: Math.floor(Math.random() * 120) + 30, // 30-150 minutes
       });
       await usageRepo.save(usage);
       usageBar.update(i + 1);
     }
     usageBar.stop();
-
-    // Create Transactions
-    console.log('🔨 Criando Transactions...');
-    const transactionBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-    transactionBar.start(200000, 0);
-    for (let i = 0; i < 200000; i++) {
-      const transaction = transactionRepo.create({
-        user: users[Math.floor(Math.random() * users.length)],
-        store: stores[Math.floor(Math.random() * stores.length)],
-        amount: Math.random() * 1000,
-      });
-      await transactionRepo.save(transaction);
-      transactionBar.update(i + 1);
-    }
-    transactionBar.stop();
 
     // Create Sponsored Account Requests
     console.log('🔨 Criando Sponsored Account Requests...');

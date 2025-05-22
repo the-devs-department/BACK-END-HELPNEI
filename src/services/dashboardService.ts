@@ -2,39 +2,64 @@ import { AppDataSource } from '../config/data-source';
 import { User } from '../entities/User';
 import { CreatedStore } from '../entities/CreatedStore';
 import { UserLocation } from '../entities/UserLocation';
+import { Sponsor } from '../entities/Sponsor';
+import { SponsoredAccountRequest } from '../entities/SponsoredAccountRequest';
 
 export const DashboardData = async (companyId: string) => {
     const userRepo = AppDataSource.getRepository(User);
     const storeRepo = AppDataSource.getRepository(CreatedStore);
     const userLocationRepo = AppDataSource.getRepository(UserLocation);
+    const sponsorRepo = AppDataSource.getRepository(Sponsor);
+    const requestRepo = AppDataSource.getRepository(SponsoredAccountRequest);
 
-    // Total de usuários associados à empresa mãe
-    const impactedUsers = await userRepo
-        .createQueryBuilder('user')
-        .where('user.sponsorId = :companyId', { companyId })
+    // Buscar informações do patrocinador
+    const sponsor = await sponsorRepo.findOne({
+        where: { sponsorId: parseInt(companyId) }
+    });
+
+    if (!sponsor) {
+        throw new Error('Patrocinador não encontrado');
+    }
+
+    // Total de usuários impactados (usuários com lojas ativas e solicitações aprovadas)
+    const impactedUsers = await requestRepo
+        .createQueryBuilder('request')
+        .innerJoin('request.user', 'user')
+        .innerJoin(CreatedStore, 'store', 'store.storeOwnerId = user.userId')
+        .where('request.sponsorId = :companyId', { companyId: parseInt(companyId) })
+        .andWhere('request.approved = :approved', { approved: true })
+        .andWhere('store.isActive = :isActive', { isActive: true })
         .getCount();
 
-    // Total de afiliados (usuários que foram indicados)
-    const totalAffiliates = await userRepo
-        .createQueryBuilder('user')
-        .where('user.indicadoPor = :companyId', { companyId })
+    // Total de afiliados (usuários com solicitações aprovadas)
+    const totalAffiliates = await requestRepo
+        .createQueryBuilder('request')
+        .where('request.sponsorId = :companyId', { companyId: parseInt(companyId) })
+        .andWhere('request.approved = :approved', { approved: true })
         .getCount();
 
-    // Total de lojas criadas pela empresa mãe
+    // Total de lojas criadas por usuários aprovados
     const createdStores = await storeRepo
         .createQueryBuilder('store')
-        .where('store.storeOwnerId = :companyId', { companyId })
+        .innerJoin('store.storeOwner', 'user')
+        .innerJoin(SponsoredAccountRequest, 'request', 'request.userId = user.userId')
+        .where('request.sponsorId = :companyId', { companyId: parseInt(companyId) })
+        .andWhere('request.approved = :approved', { approved: true })
+        .andWhere('store.isActive = :isActive', { isActive: true })
         .getCount();
 
-    // Cidades atendidas pela empresa mãe
+    // Cidades atendidas por usuários aprovados
     const cities = await userLocationRepo
         .createQueryBuilder('userLocation')
         .innerJoin('userLocation.location', 'location')
+        .innerJoin('userLocation.user', 'user')
+        .innerJoin(SponsoredAccountRequest, 'request', 'request.userId = user.userId')
         .select([
             'DISTINCT location.cidade as city',
             'location.estado as state'
         ])
-        .where('userLocation.userId IN (SELECT userId FROM user WHERE sponsorId = :companyId)', { companyId })
+        .where('request.sponsorId = :companyId', { companyId: parseInt(companyId) })
+        .andWhere('request.approved = :approved', { approved: true })
         .getRawMany();
 
     // Agrupa cidades por estado
@@ -52,11 +77,23 @@ export const DashboardData = async (companyId: string) => {
         return acc;
     }, {});
 
+    // Calcular crescimento médio baseado na proporção de afiliados aprovados
+    const totalApprovedRequests = await requestRepo
+        .createQueryBuilder('request')
+        .where('request.approved = :approved', { approved: true })
+        .getCount();
+
+    const mediumGrowth = totalApprovedRequests > 0 
+        ? Math.round((totalAffiliates / totalApprovedRequests) * 100) 
+        : 0;
+
     return {
+        companyName: sponsor.nameSponsor,
+        companyDescription: sponsor.descriptionSponsor || '',
         citiesCount: cities.length,
         impactedUsers,
         totalAffiliates,
-        mediumGrowth: 35,
+        mediumGrowth,
         createdStores,
         citiesByState: Object.values(citiesByState),
     };
