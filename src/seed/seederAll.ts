@@ -242,11 +242,12 @@ export const runSeeders = async () => {
     userBar.start(100, 0);
     const users: User[] = [];
     for (let i = 1; i <= 100; i++) {
+      const randomSponsor = sponsors[Math.floor(Math.random() * sponsors.length)]
       const user = userRepo.create({
         nome: `Usuário ${i}`,
         nomeExibicao: `Usu ${i}`,
         dataNascimento: new Date(1990 + i, 1, 1).getTime(),
-        sponsor: sponsors[i % sponsors.length],
+        sponsor: randomSponsor,
         location: locations[i % locations.length],
         email: `usuario${i}@example.com`,
         password: `senha${i}`,
