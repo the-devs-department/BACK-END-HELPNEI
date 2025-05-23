@@ -18,6 +18,9 @@ import {
     
     @Column()
     password: string;
+
+    @Column({default: 'ate1'})
+    renda: string;
   
     @Column() nome: string;
     @Column({ nullable: true }) nomeExibicao: string;
