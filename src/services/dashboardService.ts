@@ -4,6 +4,7 @@ import { CreatedStore } from '../entities/CreatedStore';
 import { StatesInfos } from '../entities/StatesInfos';
 import { Sponsor } from '../entities/Sponsor';
 import CalcMedGrowth from './MediumGrowthCalc';
+import { SponsoredAccountRequest } from '../entities/SponsoredAccountRequest';
 
 
 export const DashboardData = async (companyId: string) => {
@@ -11,6 +12,7 @@ export const DashboardData = async (companyId: string) => {
     const userRepo = AppDataSource.getRepository(User);
     const storeRepo = AppDataSource.getRepository(CreatedStore);
     const citiesRepo = AppDataSource.getRepository(StatesInfos);
+    const requestRepo = AppDataSource.getRepository(SponsoredAccountRequest)
 
     const sponsorInfos = await sponsorRepo
         .createQueryBuilder('sponsor')
@@ -25,15 +27,17 @@ export const DashboardData = async (companyId: string) => {
     const mediumGrowth = CalcMedGrowth(impactedUsers)
 
     // Total de afiliados (usuários que foram indicados)
-    const totalAffiliates = await userRepo
-        .createQueryBuilder('user')
-        .where('user.indicadoPor = :companyId', { companyId })
+     const totalAffiliates = await requestRepo
+        .createQueryBuilder('request')
+        .where('request.sponsorId = :companyId', { companyId: parseInt(companyId) })
+        .andWhere('request.approved = :approved', { approved: true })
         .getCount();
 
     // Total de lojas criadas pela empresa mãe
     const createdStores = await storeRepo
         .createQueryBuilder('store')
-        .where('store.storeOwnerId = :companyId', { companyId })
+        .innerJoin('store.storeOwner', 'user') 
+        .where('user.sponsorId = :companyId', { companyId }) 
         .getCount();
 
     // Cidades atendidas pela empresa mãe
